@@ -1,0 +1,46 @@
+
+import java.io.*;
+import java.util.*;
+
+public class GKQuiz {
+    public static void main(String[] args) throws Exception {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter your name: ");
+        String name = sc.nextLine();
+
+        Scanner file = new Scanner(new File("questions.txt"));
+        int score = 0;
+
+        while (file.hasNextLine()) {
+            String line = file.nextLine();
+            String[] parts = line.split(",");
+
+            String question = parts[0];
+            String correct = parts[1];
+
+            System.out.println(question);
+            System.out.print("Your answer: ");
+            String user = sc.nextLine();
+
+            if (user.equalsIgnoreCase(correct)) {
+                System.out.println("Correct!");
+                score++;
+            } else {
+                System.out.println("Wrong! Answer: " + correct);
+            }
+
+            System.out.println();
+        }
+
+        file.close();
+
+        FileWriter fw = new FileWriter("results.txt", true);
+        fw.write(name + " | Score: " + score + "\n");
+        fw.close();
+
+        System.out.println("Quiz Finished!");
+        System.out.println("Your Score: " + score);
+    }
+}
