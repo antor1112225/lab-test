@@ -1,0 +1,49 @@
+questions.txt (input file)
+3+4=7
+5+2=7
+6-1=5
+2*3=6
+8/2=4
+import java.io.*;
+import java.util.*;
+
+public class MathGame {
+    public static void main(String[] args) throws Exception {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Difficulty (easy/medium/hard): ");
+        String level = sc.nextLine();
+
+        Scanner file = new Scanner(new File("questions.txt"));
+        int score = 0;
+
+        while (file.hasNextLine()) {
+            String[] data = file.nextLine().split("=");
+
+            String q = data[0];
+            int ans = Integer.parseInt(data[1]);
+
+            System.out.print(q + " = ");
+            int user = sc.nextInt();
+
+            if (user == ans) {
+                System.out.println("Correct!");
+                score++;
+            } else {
+                System.out.println("Wrong!");
+            }
+        }
+
+        file.close();
+
+        FileWriter fw = new FileWriter("scores.txt", true);
+        fw.write(name + " | " + level + " | Score: " + score + "\n");
+        fw.close();
+
+        System.out.println("Final Score: " + score);
+    }
+}
